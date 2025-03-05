@@ -56,7 +56,6 @@ char *get_next_line(int fd)
     buffer[bytes_read] = '\0';
     ft_sacline(buffer);
     char *line = ft_sacline(line);
-    printf("aqui: %s\n",line);
 
     return (buffer);
 }
