@@ -12,6 +12,27 @@ int ft_strlen_r (const char *a)
 	return (count);
 }
 
+char	*ft_strdup_r(const char *src)
+{
+	int		len;
+	char	*tab;
+	int		i;
+
+	i = 0;
+	len = ft_strlen_r((char *)src);
+	tab = (char *)malloc(sizeof(char) * len + 1);
+	if (tab == 0)
+		return (0);
+	while (i < len)
+	{
+		tab[i] = src[i];
+		i++;
+	}
+	tab[i] = '\0';
+	return (tab);
+}
+
+
 char *ft_strjoin_r (char const *s1, char const *s2)
 {
     char	*b;
@@ -50,9 +71,9 @@ char *ft_substr_r (char const *s, unsigned int start, size_t len)
 	if (s == 0)
 		return (0);
 	i = 0;
-	a = ft_strlen(s);
+	a = ft_strlen_r(s);
 	if (start >= a)
-		return ((char *)ft_strdup(""));
+		return ((char *)ft_strdup_r(""));
 	else if (a - start <= len)
 		len = a - start;
 	b = (char *)malloc(sizeof(char) * (len + 1));
