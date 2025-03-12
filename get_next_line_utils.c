@@ -63,13 +63,13 @@ char	*ft_strjoin_r(char const *s1, char const *s2)
 	int		c;
 
 	if (!s1 || !s2)
-	return (NULL);
+		return (NULL);
 	a = ft_strlen_r(s1);
 	c = ft_strlen_r(s2);
 	count = 0;
 	b = (char *)malloc(sizeof(char) * (a + c + 1));
 	if (!b)
-	return (NULL);
+		return (NULL);
 	while (s1[count] != '\0')
 	{
 		b[count] = s1[count];
@@ -81,11 +81,9 @@ char	*ft_strjoin_r(char const *s1, char const *s2)
 		count++;
 	}
 	b[count] = '\0';
-	//printf("b = %s\n", b);
+	// printf("b = %s\n", b);
 	return (b);
 }
-
-
 
 char	*ft_strchr_r(const char *s, int c)
 {
