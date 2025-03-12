@@ -3,29 +3,26 @@
 static char	*ft_read_buffer(int fd, char *buffer)
 {
 	char	*buffer_temp;
-    int		bytes_read;
+	int		bytes_read;
 
 	bytes_read = 1;
 	if (!buffer)
 		buffer = ft_strdup_r("");
-        buffer_temp = malloc(sizeof(char) * BUFFER_SIZE + 1);
-        if (!buffer_temp)
+	buffer_temp = malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (!buffer_temp)
 		return (free(buffer), NULL);
-        while (bytes_read > 0)
-        {
-            bytes_read = read(fd, buffer_temp, BUFFER_SIZE);
-            printf("buffer contiene: %s\n", buffer);
-            if (bytes_read == -1)
-        {
-         //   printf("me salgo\n");
+	while (bytes_read > 0)
+	{
+		bytes_read = read(fd, buffer_temp, BUFFER_SIZE);
+		printf("buffer contiene: %s\n", buffer);
+		if (bytes_read == -1)
+		{
 			return (free(buffer_temp), free(buffer), NULL);
-        }
-        //printf("hola\n");
+		}
 		buffer_temp[bytes_read] = '\0';
 		buffer = ft_strjoin_r(buffer, buffer_temp);
-//        printf("devuelve: %s\n", buffer);
 		if (ft_strchr_r(buffer_temp, '\n'))
-        break ;
+			break ;
 	}
 	free(buffer_temp);
 	return (buffer);
@@ -37,11 +34,11 @@ static char	*ft_sacline(char *buffer_acu)
 
 	count = 0;
 	if (!buffer_acu)
-    {
-        free(buffer_acu);
-        buffer_acu = NULL;
-        return (NULL);
-    }
+	{
+		free(buffer_acu);
+		buffer_acu = NULL;
+		return (NULL);
+	}
 	while (buffer_acu[count] && buffer_acu[count] != '\n')
 		count++;
 	line = ft_substr_r(buffer_acu, 0, count + 1);
@@ -76,11 +73,11 @@ char	*get_next_line(int fd)
 	static char	*buffer_read;
 	char		*line;
 
-/*     if (!buffer_read) // si falla la lectura
-        return (NULL); */
+	/*     if (!buffer_read) // si falla la lectura
+			return (NULL); */
 	buffer_read = ft_read_buffer(fd, buffer_read);
-    line = ft_sacline(buffer_read); // sacar la linea //mi funcion
-    if (!line)
+	line = ft_sacline(buffer_read); // sacar la linea //mi funcion
+	if (!line)
 		return (free(buffer_read), buffer_read = NULL); // si falla
 	buffer_read = ft_delet(buffer_read);
 	if (line && *line == '\0') // si falla algo
@@ -94,24 +91,24 @@ char	*get_next_line(int fd)
 }
 /* int main(void)
 {
-    int fd;
-    char *line;
-    int line_number = 1;
+	int fd;
+	char *line;
+	int line_number = 1;
 
-    // Abrimos el archivo test.txt
-    fd = open("test.txt", O_RDONLY);
+	// Abrimos el archivo test.txt
+	fd = open("test.txt", O_RDONLY);
 
 
-    // Leemos e imprimimos cada línea con un número
-    while ((line = get_next_line(fd)) != NULL)
-    {
-        printf("Línea %d: %s", line_number, line);
-        free(line);
-        line_number++;
-    }
+	// Leemos e imprimimos cada línea con un número
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("Línea %d: %s", line_number, line);
+		free(line);
+		line_number++;
+	}
 
-    // Cerramos el archivo
-    close(fd);
-    printf("Lectura terminada. Total de líneas: %d\n", line_number - 1);
-    return (0);
+	// Cerramos el archivo
+	close(fd);
+	printf("Lectura terminada. Total de líneas: %d\n", line_number - 1);
+	return (0);
 } */
