@@ -1,69 +1,117 @@
 #include "get_next_line.h"
-/*
-static int ft_read (int fd, const char *a)
-{
-    int count;
 
-    if (fd != '\0')
-            return (NULL);
-    count = ft_strlen_r (a);
+static char	*ft_read_buffer(int fd, char *buffer)
+{
+	char	*buffer_temp;
+    int		bytes_read;
+
+	bytes_read = 1;
+	if (!buffer)
+		buffer = ft_strdup_r("");
+        buffer_temp = malloc(sizeof(char) * BUFFER_SIZE + 1);
+        if (!buffer_temp)
+		return (free(buffer), NULL);
+        while (bytes_read > 0)
+        {
+            bytes_read = read(fd, buffer_temp, BUFFER_SIZE);
+            printf("buffer contiene: %s\n", buffer);
+            if (bytes_read == -1)
+        {
+         //   printf("me salgo\n");
+			return (free(buffer_temp), free(buffer), NULL);
+        }
+        //printf("hola\n");
+		buffer_temp[bytes_read] = '\0';
+		buffer = ft_strjoin_r(buffer, buffer_temp);
+//        printf("devuelve: %s\n", buffer);
+		if (ft_strchr_r(buffer_temp, '\n'))
+        break ;
+	}
+	free(buffer_temp);
+	return (buffer);
+}
+static char	*ft_sacline(char *buffer_acu)
+{
+	int		count;
+	char	*line;
+
+	count = 0;
+	if (!buffer_acu)
+    {
+        free(buffer_acu);
+        buffer_acu = NULL;
+        return (NULL);
+    }
+	while (buffer_acu[count] && buffer_acu[count] != '\n')
+		count++;
+	line = ft_substr_r(buffer_acu, 0, count + 1);
+	return (line);
+}
+static char	*ft_delet(char *buffer_acu)
+{
+	int		i;
+	char	*new;
+
+	i = 0;
+	if (!buffer_acu)
+	{
+		free(buffer_acu);
+		buffer_acu = NULL;
+		return (NULL);
+	}
+	while (buffer_acu[i] != '\n' && buffer_acu[i] != '\0')
+		i++;
+	new = ft_substr_r(buffer_acu, i + 1, ft_strlen_r(buffer_acu) - i);
+	if (!new)
+	{
+		free(buffer_acu);
+		return (NULL);
+	}
+	free(buffer_acu);
+	return (new);
 }
 
-static void **ft_save_print (const char *src)
+char	*get_next_line(int fd)
 {
-    char save;
+	static char	*buffer_read;
+	char		*line;
 
-    if (*src != '\0')
-        return (NULL);
-    save = ft_substr_r (*src);
+/*     if (!buffer_read) // si falla la lectura
+        return (NULL); */
+	buffer_read = ft_read_buffer(fd, buffer_read);
+    line = ft_sacline(buffer_read); // sacar la linea //mi funcion
+    if (!line)
+		return (free(buffer_read), buffer_read = NULL); // si falla
+	buffer_read = ft_delet(buffer_read);
+	if (line && *line == '\0') // si falla algo
+	{
+		free(line);        // liberamos todo
+		free(buffer_read); // ponemos a null la cajita
+		buffer_read = NULL;
+		return (NULL); // devolvemos null
+	}
+	return (line); // return line
 }
-
-static void **ft_save_jump (char const *s1, char const *s2)
+/* int main(void)
 {
-    char save;
-    char jump;
-
-    if (*s1 != '\0')
-        return (NULL);
-    save = ft_strjoin_r(s2);
-    jump = ft_putchar_r(s1, s2);
-}*/
-static char *ft_sacline(char *buffer)
-{
-    int count;
+    int fd;
     char *line;
+    int line_number = 1;
 
-    count = 0;
-    if (!buffer)
-        return(NULL);
-    while (buffer[count] && buffer[count] != '\n')
-        count++;
-    line = ft_substr_r(buffer, 0, count + 1);
-    return (line);
-}
+    // Abrimos el archivo test.txt
+    fd = open("test.txt", O_RDONLY);
 
-char *get_next_line(int fd)
-{
-    static char *buffer;
-    int bytes_read;
 
-    buffer = malloc(sizeof(char) * BUFFER_SIZE + 1);
-    if (!buffer)
-        return (NULL);
-    bytes_read = read(fd, buffer, BUFFER_SIZE);
-    if (bytes_read <= 0)
-        return (NULL);
-    buffer[bytes_read] = '\0';
-    ft_sacline(buffer);
-    char *line = ft_sacline(line);
+    // Leemos e imprimimos cada línea con un número
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        printf("Línea %d: %s", line_number, line);
+        free(line);
+        line_number++;
+    }
 
-    return (buffer);
-}
-int main(void)
-{
-    int fd = open("test.txt", O_RDONLY);
-    char *line = get_next_line(fd);
-    printf("Leído: %s\n", line);
+    // Cerramos el archivo
     close(fd);
+    printf("Lectura terminada. Total de líneas: %d\n", line_number - 1);
     return (0);
-}
+} */
