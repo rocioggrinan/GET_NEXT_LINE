@@ -81,7 +81,6 @@ char	*ft_strjoin_r(char const *s1, char const *s2)
 		count++;
 	}
 	b[count] = '\0';
-	// printf("b = %s\n", b);
 	return (b);
 }
 

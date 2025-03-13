@@ -89,17 +89,15 @@ char	*get_next_line(int fd)
 	}
 	return (line); // return line
 }
-/* int main(void)
+/*int main(void)
 {
 	int fd;
 	char *line;
 	int line_number = 1;
 
-	// Abrimos el archivo test.txt
 	fd = open("test.txt", O_RDONLY);
 
 
-	// Leemos e imprimimos cada línea con un número
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		printf("Línea %d: %s", line_number, line);
@@ -107,8 +105,7 @@ char	*get_next_line(int fd)
 		line_number++;
 	}
 
-	// Cerramos el archivo
 	close(fd);
 	printf("Lectura terminada. Total de líneas: %d\n", line_number - 1);
 	return (0);
-} */
+}*/
