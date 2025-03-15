@@ -8,7 +8,7 @@ int	main(void)
 	char	*line[4096];
 
 	i = 1;
-	fd_1 = open("test.txt", \
+	fd_1 = open("empty.txt", \
 					O_RDONLY);
 	while (1)
 	{
