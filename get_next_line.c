@@ -8,6 +8,8 @@ static char	*ft_read_buffer(int fd, char *buffer)
 	bytes_read = 1;
 	if (!buffer)
 		buffer = ft_strdup_r("");
+	if (BUFFER_SIZE < 0)
+		return (NULL);
 	buffer_temp = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buffer_temp)
 		return (free(buffer), NULL);
@@ -75,6 +77,8 @@ char	*get_next_line(int fd)
 	/*     if (!buffer_read) // si falla la lectura
 			return (NULL); */
 	buffer_read = ft_read_buffer(fd, buffer_read);
+	if (!buffer_read)
+		return (NULL);
 	line = ft_sacline(buffer_read); // sacar la linea //mi funcion
 	if (!line)
 		return (free(buffer_read), buffer_read = NULL); // si falla
