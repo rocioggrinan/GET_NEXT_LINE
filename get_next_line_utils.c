@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rogarci2 <rogarci2@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: rogarci2 <<rogarci2@student.42madrid.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-15 19:16:51 by rogarci2          #+#    #+#             */
-/*   Updated: 2025-03-15 19:16:51 by rogarci2         ###   ########.com      */
+/*   Created: 2025/03/15 19:16:51 by rogarci2          #+#    #+#             */
+/*   Updated: 2025/03/15 21:16:30 by rogarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	ft_strlen_r(const char *a)
 		count++;
 	return (count);
 }
+
 char	*ft_substr_r(char const *s, unsigned int start, size_t len)
 {
 	size_t	a;
@@ -48,6 +49,7 @@ char	*ft_substr_r(char const *s, unsigned int start, size_t len)
 	b[i] = '\0';
 	return (b);
 }
+
 char	*ft_strdup_r(const char *src)
 {
 	int		len;
@@ -67,6 +69,7 @@ char	*ft_strdup_r(const char *src)
 	tab[i] = '\0';
 	return (tab);
 }
+
 char	*ft_strjoin_r(char *s1, char *s2)
 {
 	char	*b;
@@ -93,13 +96,12 @@ char	*ft_strjoin_r(char *s1, char *s2)
 		count++;
 	}
 	b[count] = '\0';
-	free(s1);
-	return (b);
+	return (free(s1), b);
 }
 
 char	*ft_strchr_r(const char *s, int c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i] != '\0')

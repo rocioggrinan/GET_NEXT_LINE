@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rogarci2 <rogarci2@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: rogarci2 <<rogarci2@student.42madrid.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-15 19:16:41 by rogarci2          #+#    #+#             */
-/*   Updated: 2025-03-15 19:16:41 by rogarci2         ###   ########.com      */
+/*   Created: 2025/03/15 19:16:41 by rogarci2          #+#    #+#             */
+/*   Updated: 2025/03/15 21:18:35 by rogarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static char	*ft_read_buffer(int fd, char *buffer)
 	free(buffer_temp);
 	return (buffer);
 }
+
 static char	*ft_sacline(char *buffer_acu)
 {
 	int		count;
@@ -57,6 +58,7 @@ static char	*ft_sacline(char *buffer_acu)
 	line = ft_substr_r(buffer_acu, 0, count + 1);
 	return (line);
 }
+
 static char	*ft_delet(char *buffer_acu)
 {
 	int		i;
@@ -86,41 +88,19 @@ char	*get_next_line(int fd)
 	static char	*buffer_read;
 	char		*line;
 
-	/*     if (!buffer_read) // si falla la lectura
-			return (NULL); */
 	buffer_read = ft_read_buffer(fd, buffer_read);
 	if (!buffer_read)
 		return (NULL);
-	line = ft_sacline(buffer_read); // sacar la linea //mi funcion
+	line = ft_sacline(buffer_read);
 	if (!line)
-		return (free(buffer_read), buffer_read = NULL); // si falla
+		return (free(buffer_read), buffer_read = NULL);
 	buffer_read = ft_delet(buffer_read);
-	if (line && *line == '\0') // si falla algo
+	if (line && *line == '\0')
 	{
-		free(line);        // liberamos todo
-		free(buffer_read); // ponemos a null la cajita
-		buffer_read = NULL;
-		return (NULL); // devolvemos null
-	}
-	return (line); // return line
-}
-/*int main(void)
-{
-	int fd;
-	char *line;
-	int line_number = 1;
-
-	fd = open("test.txt", O_RDONLY);
-
-
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		printf("Línea %d: %s", line_number, line);
 		free(line);
-		line_number++;
+		free(buffer_read);
+		buffer_read = NULL;
+		return (NULL);
 	}
-
-	close(fd);
-	printf("Lectura terminada. Total de líneas: %d\n", line_number - 1);
-	return (0);
-}*/
+	return (line);
+}
