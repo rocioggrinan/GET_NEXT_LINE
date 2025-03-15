@@ -8,7 +8,7 @@ int	main(void)
 	char	*line[4096];
 
 	i = 1;
-	fd_1 = open("J. K. Rowling - Harry Potter 1 - Sorcerer's Stone.txt", \
+	fd_1 = open("test.txt", \
 					O_RDONLY);
 	while (1)
 	{

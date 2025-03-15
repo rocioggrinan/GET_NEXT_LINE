@@ -14,7 +14,7 @@ static char	*ft_read_buffer(int fd, char *buffer)
 	while (bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer_temp, BUFFER_SIZE);
-		printf("buffer contiene: %s\n", buffer);
+		printf("buffer contiene: %s\n", buffer); //
 		if (bytes_read == -1)
 		{
 			return (free(buffer_temp), free(buffer), NULL);

@@ -55,7 +55,7 @@ char	*ft_strdup_r(const char *src)
 	tab[i] = '\0';
 	return (tab);
 }
-char	*ft_strjoin_r(char const *s1, char const *s2)
+char	*ft_strjoin_r(char *s1, char *s2)
 {
 	char	*b;
 	int		count;
@@ -70,17 +70,18 @@ char	*ft_strjoin_r(char const *s1, char const *s2)
 	b = (char *)malloc(sizeof(char) * (a + c + 1));
 	if (!b)
 		return (NULL);
-	while (s1[count] != '\0')
+	while (count < a)
 	{
 		b[count] = s1[count];
 		count++;
 	}
-	while (s2[count - a] != '\0')
+	while (count < (a + c))
 	{
 		b[count] = s2[count - a];
 		count++;
 	}
 	b[count] = '\0';
+	free(s1);
 	return (b);
 }
 
